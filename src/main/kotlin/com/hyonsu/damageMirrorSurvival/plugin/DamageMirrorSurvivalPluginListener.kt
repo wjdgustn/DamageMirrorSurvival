@@ -33,6 +33,7 @@ class DamageMirrorSurvivalPluginListener : Listener {
     @EventHandler
     fun PlayerJumpEvent(e: PlayerJumpEvent) {
         val player = e.player
+        player.sendMessage("jump")
         if (player.gameMode == GameMode.CREATIVE
             || player.isClimbing
             || e.player.world.getBlockAt(e.player.location).isLiquid
@@ -54,13 +55,24 @@ class DamageMirrorSurvivalPluginListener : Listener {
     @EventHandler
     fun PlayerMoveEvent(e: PlayerMoveEvent) {
         val player = e.player
-        if(player.gameMode == GameMode.CREATIVE
-            || player.vehicle !is AbstractHorse
-            || e.to.y - e.from.y <= 0.5) return
 
-        val horse = player.vehicle as AbstractHorse
+        if(e.to.y != e.from.y) player.sendMessage("${e.to.y - e.from.y}")
 
-        e.isCancelled = true
-        horse.removePassenger(player)
+        if(player.gameMode == GameMode.CREATIVE) return
+
+        val yMoved = e.to.y - e.from.y
+        if(player.vehicle == null && yMoved > 0.25 && yMoved < 0.5) {
+            e.isCancelled = true
+            return
+        }
+
+        if(player.vehicle is AbstractHorse && yMoved > 0.5625) {
+            e.isCancelled = true
+
+            val horse = player.vehicle
+            if(horse is AbstractHorse) horse.removePassenger(player)
+
+            return
+        }
     }
 }
