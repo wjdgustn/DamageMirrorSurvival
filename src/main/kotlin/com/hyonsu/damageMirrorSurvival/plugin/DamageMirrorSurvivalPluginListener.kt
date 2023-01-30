@@ -56,7 +56,7 @@ class DamageMirrorSurvivalPluginListener : Listener {
         val player = e.player
         if(player.gameMode == GameMode.CREATIVE
             || player.vehicle !is AbstractHorse
-            || e.to.y <= e.from.y) return
+            || e.to.y - e.from.y <= 0.5) return
 
         val horse = player.vehicle as AbstractHorse
 
