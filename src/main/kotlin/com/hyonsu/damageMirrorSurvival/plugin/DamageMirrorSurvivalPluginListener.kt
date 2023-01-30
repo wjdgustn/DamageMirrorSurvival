@@ -33,7 +33,6 @@ class DamageMirrorSurvivalPluginListener : Listener {
     @EventHandler
     fun PlayerJumpEvent(e: PlayerJumpEvent) {
         val player = e.player
-        player.sendMessage("jump")
         if (player.gameMode == GameMode.CREATIVE
             || player.isClimbing
             || e.player.world.getBlockAt(e.player.location).isLiquid
@@ -55,8 +54,6 @@ class DamageMirrorSurvivalPluginListener : Listener {
     @EventHandler
     fun PlayerMoveEvent(e: PlayerMoveEvent) {
         val player = e.player
-
-        if(e.to.y != e.from.y) player.sendMessage("${e.to.y - e.from.y}")
 
         if(player.gameMode == GameMode.CREATIVE) return
 
