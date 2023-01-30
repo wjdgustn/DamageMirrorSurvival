@@ -57,7 +57,7 @@ class DamageMirrorSurvivalPluginListener : Listener {
     fun PlayerMoveEvent(e: PlayerMoveEvent) {
         val player = e.player
 
-        if(player.gameMode == GameMode.CREATIVE) return
+        if(player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) return
 
         val yMoved = e.to.y - e.from.y
         if(player.vehicle == null && yMoved > 0 && yMoved < 0.5 && player.location.block.getRelative(BlockFace.DOWN).type == Material.AIR) {
