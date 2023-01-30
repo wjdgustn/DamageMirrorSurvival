@@ -2,6 +2,8 @@ package com.hyonsu.damageMirrorSurvival.plugin
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent
 import org.bukkit.GameMode
+import org.bukkit.Material
+import org.bukkit.block.BlockFace
 import org.bukkit.entity.AbstractHorse
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
@@ -58,7 +60,7 @@ class DamageMirrorSurvivalPluginListener : Listener {
         if(player.gameMode == GameMode.CREATIVE) return
 
         val yMoved = e.to.y - e.from.y
-        if(player.vehicle == null && yMoved > 0.25 && yMoved < 0.4) {
+        if(player.vehicle == null && yMoved > 0 && player.location.block.getRelative(BlockFace.DOWN).type == Material.AIR) {
             e.isCancelled = true
             return
         }
