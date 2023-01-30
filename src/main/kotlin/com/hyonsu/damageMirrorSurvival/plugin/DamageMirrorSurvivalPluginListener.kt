@@ -37,7 +37,8 @@ class DamageMirrorSurvivalPluginListener : Listener {
         val player = e.player
         if (player.gameMode == GameMode.CREATIVE
             || player.isClimbing
-            || e.player.world.getBlockAt(e.player.location).isLiquid
+            || player.isInWater
+            || player.isInLava
         ) return
 
         e.isCancelled = true
