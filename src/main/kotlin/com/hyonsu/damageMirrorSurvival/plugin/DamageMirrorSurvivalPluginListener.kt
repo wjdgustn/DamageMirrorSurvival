@@ -2,11 +2,14 @@ package com.hyonsu.damageMirrorSurvival.plugin
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent
 import org.bukkit.GameMode
+import org.bukkit.entity.Horse
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.HorseJumpEvent
+import org.bukkit.event.player.PlayerMoveEvent
 
 class DamageMirrorSurvivalPluginListener : Listener {
     @EventHandler
@@ -36,5 +39,28 @@ class DamageMirrorSurvivalPluginListener : Listener {
         ) return
 
         e.isCancelled = true
+    }
+
+    @EventHandler
+    fun HorseJumpEvent(e: HorseJumpEvent) {
+        val player = e.entity.passengers[0]
+        if(player !is Player) return
+
+        if(player.gameMode == GameMode.CREATIVE) return
+
+        e.entity.jumpStrength = 0.0
+    }
+
+    @EventHandler
+    fun PlayerMoveEvent(e: PlayerMoveEvent) {
+        val player = e.player
+        if(player.gameMode == GameMode.CREATIVE
+            || player.vehicle !is Horse
+            || e.to.y <= e.from.y) return
+
+        val horse = player.vehicle as Horse
+
+        e.isCancelled = true
+        horse.removePassenger(player)
     }
 }
