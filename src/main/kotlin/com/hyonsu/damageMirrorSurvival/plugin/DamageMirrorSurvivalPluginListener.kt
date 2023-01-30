@@ -29,7 +29,11 @@ class DamageMirrorSurvivalPluginListener : Listener {
 
     @EventHandler
     fun PlayerJumpEvent(e: PlayerJumpEvent) {
-        if(e.player.gameMode == GameMode.CREATIVE) return
+        val player = e.player
+        if (player.gameMode == GameMode.CREATIVE
+            || player.isClimbing
+            || e.player.world.getBlockAt(e.player.location).isLiquid
+        ) return
 
         e.isCancelled = true
     }
