@@ -58,7 +58,7 @@ class DamageMirrorSurvivalPluginListener : Listener {
         if(player.gameMode == GameMode.CREATIVE) return
 
         val yMoved = e.to.y - e.from.y
-        if(player.vehicle == null && yMoved > 0.25 && yMoved < 0.5) {
+        if(player.vehicle == null && yMoved > 0.25 && yMoved < 0.4) {
             e.isCancelled = true
             return
         }
