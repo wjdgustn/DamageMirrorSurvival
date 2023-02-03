@@ -12,7 +12,6 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.HorseJumpEvent
 import org.bukkit.event.player.PlayerMoveEvent
-import kotlin.math.roundToLong
 
 class DamageMirrorSurvivalPluginListener : Listener {
     @EventHandler
@@ -62,9 +61,7 @@ class DamageMirrorSurvivalPluginListener : Listener {
         if(player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) return
 
         val yMoved = e.to.y - e.from.y
-        val location = player.location
-        location.y = location.y.roundToLong().toDouble()
-        if(player.vehicle == null && yMoved > 0.1 && yMoved < 0.5 && location.block.getRelative(BlockFace.DOWN).type == Material.AIR) {
+        if(player.vehicle == null && yMoved > 0.1 && yMoved < 0.5 && player.location.block.getRelative(BlockFace.DOWN).type == Material.AIR) {
             e.isCancelled = true
             return
         }
